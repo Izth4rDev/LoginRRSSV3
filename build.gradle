@@ -32,8 +32,7 @@ dependencies {
     // Starter para Spring Data JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     // Conector MySQL
-    runtimeOnly 'mysql:mysql-connector-java:8.0.33' // Reemplaza por la última versión estable
-
+    runtimeOnly 'mysql:mysql-connector-java:8.0.33'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'

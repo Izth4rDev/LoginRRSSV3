@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,28 +11,55 @@
 <div class="container d-flex justify-content-center align-items-center vh-100">
   <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
     <h3 class="text-center mb-4">Login</h3>
-    <form>
+    <!-- Formulario de Login -->
+    <form action="/login" method="post" th:action="@{/login}">
+      <!-- Token CSRF (requerido por Spring Security) -->
+      <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
+      <!-- Campo para el email -->
       <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" placeholder="Enter your email">
+        <label for="username" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" required>
       </div>
+
+      <!-- Campo para la contraseña -->
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="Enter your password">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
       </div>
+
+      <!-- Checkbox para recordar sesión (opcional) -->
       <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="rememberMe">
+        <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me">
         <label class="form-check-label" for="rememberMe">Remember me</label>
       </div>
+
+      <!-- Botón de envío -->
       <button type="submit" class="btn btn-primary w-100">Login</button>
-      <a href="/registerForm" class="btn btn-secondary my-2 w-100"> Register user</a>
-      <div class="d-flex flex-column justify-content-center align-items-center my-2">
-        <a href="/oauth2/authorization/google" class="btn btn-danger my-2" >Login with Google <i class="fa-brands fa-google fa-4xs" style="color: #f7f7f8;"></i></a>
-      </div>
-      <p class="text-center mt-3 w-100">
-        <a href="#">Forgot password?</a>
-      </p>
     </form>
+
+    <!-- Enlace para registrar un usuario -->
+    <a href="/registerForm" class="btn btn-secondary my-2 w-100">Register user</a>
+
+    <!-- Botón de login con Google -->
+    <div class="d-flex flex-column justify-content-center align-items-center my-2">
+      <a href="/oauth2/authorization/google" class="btn btn-danger my-2">
+        Login with Google <i class="fa-brands fa-google fa-4xs" style="color: #f7f7f8;"></i>
+      </a>
+    </div>
+
+    <!-- Mensajes de error y éxito -->
+    <div th:if="${param.error}" class="text-danger text-center mt-3">
+      Invalid username or password. Please try again.
+    </div>
+    <div th:if="${param.logout}" class="text-success text-center mt-3">
+      You have been logged out successfully.
+    </div>
+
+    <!-- Enlace para "Forgot password" -->
+    <p class="text-center mt-3">
+      <a href="#">Forgot password?</a>
+    </p>
   </div>
 </div>
 <script src="https://kit.fontawesome.com/9d55460b02.js" crossorigin="anonymous"></script>
